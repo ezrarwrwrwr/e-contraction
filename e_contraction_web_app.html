@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Contraction | Premium Eco-Infrastructure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        glass: {
+                            100: 'rgba(255, 255, 255, 0.1)',
+                            200: 'rgba(255, 255, 255, 0.2)',
+                            300: 'rgba(255, 255, 255, 0.3)',
+                        },
+                        eco: {
+                            light: '#4ade80',
+                            DEFAULT: '#22c55e',
+                            dark: '#16a34a',
+                        }
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'scan': 'scan 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        scan: {
+                            '0%': { top: '0%', opacity: 0 },
+                            '10%': { opacity: 1 },
+                            '90%': { opacity: 1 },
+                            '100%': { top: '100%', opacity: 0 },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+        
+        /* High Value Glassmorphism Core */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .glass-panel-hover:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #4ade80, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Hide scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-eco selection:text-white relative">
+
+    <!-- Ambient Animated Background -->
+    <div class="fixed inset-0 w-full h-full z-[-1] overflow-hidden">
+        <div class="absolute top-0 -left-4 w-72 h-72 bg-emerald-500 rounded-full mix-blend-screen filter blur-[120px] opacity-30 animate-blob"></div>
+        <div class="absolute top-0 -right-4 w-72 h-72 bg-blue-500 rounded-full mix-blend-screen filter blur-[120px] opacity-30 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-8 left-20 w-72 h-72 bg-teal-500 rounded-full mix-blend-screen filter blur-[120px] opacity-30 animate-blob animation-delay-4000"></div>
+    </div>
+
+    <!-- Sticky Glass Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300 pt-4 px-4 sm:px-6 lg:px-8">
+        <div class="glass-panel max-w-7xl mx-auto rounded-full px-6 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="toggleView('landing')">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-eco-dark to-blue-500 flex items-center justify-center shadow-lg border border-white/20">
+                    <i class="fa-solid fa-leaf text-white text-lg"></i>
+                </div>
+                <span class="font-bold text-xl tracking-wide text-white">E-Contraction</span>
+            </div>
+            
+            <!-- Desktop Links -->
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="text-gray-300 hover:text-white transition-colors text-sm font-medium">Latar Belakang</a>
+                <a href="#criteria" class="text-gray-300 hover:text-white transition-colors text-sm font-medium">Kriteria & Produk</a>
+                <a href="#process" class="text-gray-300 hover:text-white transition-colors text-sm font-medium">Proses</a>
+            </div>
+
+            <!-- Dashboard Button -->
+            <button onclick="toggleView('dashboard')" class="bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md text-white px-5 py-2 rounded-full text-sm font-semibold transition-all flex items-center gap-2 group">
+                <i class="fa-regular fa-circle-user group-hover:scale-110 transition-transform"></i> Portal Akun
+            </button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT VIEW -->
+    <main id="view-landing" class="transition-opacity duration-500 opacity-100 block">
+        
+        <!-- Hero Section -->
+        <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 min-h-screen flex items-center">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <!-- Text Content -->
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel text-eco-light text-xs font-bold tracking-widest uppercase mb-6">
+                            <span class="w-2 h-2 rounded-full bg-eco-light animate-pulse"></span>
+                            Inovasi Infrastruktur Hijau
+                        </div>
+                        <h1 class="text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+                            Ubah Sampah Jadi <br/>
+                            <span class="text-gradient">Kota Masa Depan</span>
+                        </h1>
+                        <p class="text-lg text-gray-300 mb-10 max-w-xl leading-relaxed font-light">
+                            E-Contraction adalah fasilitator modern yang mengubah sampah plastik Anda menjadi Paving Block, Lapisan Aspal, dan Pipa Air bermutu tinggi. Tanpa bau, tanpa polusi.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button onclick="toggleView('dashboard')" class="bg-eco hover:bg-eco-dark text-white px-8 py-4 rounded-full font-bold text-lg shadow-[0_0_20px_rgba(34,197,94,0.4)] transition-all flex items-center justify-center gap-3">
+                                Mulai Berkontribusi <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Glassmorphism Visual Showcase -->
+                    <div class="relative w-full h-[500px] flex items-center justify-center">
+                        <!-- Background Decorative Glass -->
+                        <div class="absolute inset-0 glass-panel rounded-3xl transform rotate-3 scale-105 opacity-50"></div>
+                        
+                        <!-- Main Showcase Card -->
+                        <div class="relative glass-panel w-full max-w-md h-[400px] rounded-3xl p-8 flex flex-col items-center justify-center overflow-hidden z-10 border border-white/20">
+                            <!-- Abstract Representation of Products -->
+                            <div class="relative w-full h-full flex items-center justify-center">
+                                <!-- Aspal -->
+                                <div class="absolute top-10 left-10 w-24 h-24 glass-panel bg-gray-900/50 rounded-2xl flex items-center justify-center transform -rotate-12 animate-[float_4s_ease-in-out_infinite]">
+                                    <i class="fa-solid fa-road text-3xl text-gray-400"></i>
+                                </div>
+                                <!-- Paving -->
+                                <div class="absolute bottom-10 right-10 w-28 h-28 glass-panel bg-gray-100/10 rounded-2xl flex items-center justify-center transform rotate-12 animate-[float_5s_ease-in-out_infinite]">
+                                    <i class="fa-solid fa-cubes text-4xl text-eco-light"></i>
+                                </div>
+                                <!-- Pipa -->
+                                <div class="absolute top-1/2 right-4 w-20 h-20 glass-panel bg-blue-900/30 rounded-full flex items-center justify-center transform -translate-y-1/2 animate-[float_6s_ease-in-out_infinite]">
+                                    <i class="fa-solid fa-faucet-drip text-2xl text-blue-400"></i>
+                                </div>
+                                
+                                <!-- Center Recycle -->
+                                <div class="w-32 h-32 rounded-full glass-panel border border-eco-light/50 flex items-center justify-center shadow-[0_0_40px_rgba(74,222,128,0.3)] z-20">
+                                    <i class="fa-solid fa-recycle text-5xl text-eco-light"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-24 relative z-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-eco-light font-bold tracking-widest uppercase text-sm mb-3">Latar Belakang</h2>
+                    <h3 class="text-3xl md:text-5xl font-bold mb-6 text-white">Mengapa Kami Hadir?</h3>
+                    <p class="text-gray-400 text-lg font-light">
+                        Sampah plastik bukanlah musuh jika diletakkan di tempat yang tepat. E-Contraction menjembatani masyarakat dengan industri untuk mengubah limbah yang merusak ekosistem menjadi material berharga yang membangun peradaban.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="glass-panel glass-panel-hover rounded-3xl p-8 transition-all duration-300">
+                        <div class="w-14 h-14 rounded-2xl bg-red-500/20 text-red-400 flex items-center justify-center text-2xl mb-6 border border-red-500/30">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3">Krisis TPA & Polusi</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Penumpukan sampah menimbulkan bau busuk dan pencemaran air lindi. Kami memotong jalur ini sebelum sampah mencapai TPA.
+                        </p>
+                    </div>
+                    
+                    <div class="glass-panel glass-panel-hover rounded-3xl p-8 transition-all duration-300 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-eco-light/10 rounded-bl-full"></div>
+                        <div class="w-14 h-14 rounded-2xl bg-eco-500/20 text-eco-light flex items-center justify-center text-2xl mb-6 border border-eco-500/30 relative z-10">
+                            <i class="fa-solid fa-people-carry-box"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3 relative z-10">Fasilitator Terpercaya</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed relative z-10">
+                            Kami menetapkan standar pengumpulan bersih. Tidak ada sisa organik, sehingga proses penyimpanan dan pengolahan 100% bebas bau.
+                        </p>
+                    </div>
+                    
+                    <div class="glass-panel glass-panel-hover rounded-3xl p-8 transition-all duration-300">
+                        <div class="w-14 h-14 rounded-2xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-2xl mb-6 border border-blue-500/30">
+                            <i class="fa-solid fa-city"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3">Ekonomi Sirkular</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Plastik dilebur dengan teknologi tinggi menjadi infrastruktur. Menghemat material alam dan memperpanjang usia pakai plastik secara permanen.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Information Hub: Criteria & Products -->
+        <section id="criteria" class="py-24 relative z-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                    <div class="max-w-2xl">
+                        <h2 class="text-eco-light font-bold tracking-widest uppercase text-sm mb-3">Kriteria & Hasil Akhir</h2>
+                        <h3 class="text-3xl md:text-5xl font-bold text-white">Transformasi Material</h3>
+                    </div>
+                    <div class="glass-panel px-6 py-4 rounded-2xl border-l-4 border-l-eco-light flex items-center gap-4">
+                        <i class="fa-solid fa-circle-info text-eco-light text-2xl"></i>
+                        <p class="text-sm text-gray-300 font-medium">Syarat Mutlak: Semua sampah wajib dalam keadaan <br/> <strong class="text-white">KERING & BERSIH</strong> dari sisa makanan.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Paving Block -->
+                    <div class="glass-panel rounded-3xl overflow-hidden flex flex-col group">
+                        <div class="h-48 bg-gradient-to-br from-gray-800 to-gray-900 relative overflow-hidden flex items-center justify-center">
+                            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjMWYyOTM3Ij48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDBMOCA4Wk04IDBMMCA4WiIgc3Ryb2tlPSIjMzM0MTU1IiBzdHJva2Utd2lkdGg9IjEiPjwvcGF0aD4KPC9zdmc+')] opacity-50"></div>
+                            <i class="fa-solid fa-cubes text-6xl text-gray-400 relative z-10 group-hover:scale-110 transition-transform duration-500"></i>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h4 class="text-2xl font-bold text-white mb-2">Paving Block Plastik</h4>
+                            <p class="text-gray-400 text-sm mb-6 flex-grow">Lebih ringan, tidak mudah retak, dan memiliki daya serap/kedap air yang bisa disesuaikan dibanding beton biasa.</p>
+                            <div class="glass-panel bg-white/5 p-4 rounded-xl border-none">
+                                <span class="text-xs text-eco-light font-bold uppercase tracking-wider block mb-2">Plastik Diterima:</span>
+                                <ul class="text-sm text-gray-300 space-y-2">
+                                    <li><i class="fa-solid fa-check text-eco-light mr-2"></i> Kantong Kresek (HDPE/LDPE)</li>
+                                    <li><i class="fa-solid fa-check text-eco-light mr-2"></i> Kemasan Sachet Multilayer</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Aspal -->
+                    <div class="glass-panel rounded-3xl overflow-hidden flex flex-col group relative">
+                        <!-- Badge -->
+                        <div class="absolute top-4 right-4 z-20 glass-panel bg-eco-600/80 px-3 py-1 rounded-full text-xs font-bold text-white border border-eco-400">
+                            Dampak Tertinggi
+                        </div>
+                        <div class="h-48 bg-gradient-to-br from-gray-900 to-black relative overflow-hidden flex items-center justify-center">
+                            <div class="absolute bottom-0 w-full h-4 border-t-2 border-dashed border-yellow-500/50"></div>
+                            <i class="fa-solid fa-road text-6xl text-yellow-500/80 relative z-10 group-hover:scale-110 transition-transform duration-500"></i>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h4 class="text-2xl font-bold text-white mb-2">Campuran Aspal</h4>
+                            <p class="text-gray-400 text-sm mb-6 flex-grow">Meningkatkan stabilitas jalan, lebih tahan terhadap genangan air, dan mencegah jalan cepat berlubang.</p>
+                            <div class="glass-panel bg-white/5 p-4 rounded-xl border-none">
+                                <span class="text-xs text-eco-light font-bold uppercase tracking-wider block mb-2">Plastik Diterima:</span>
+                                <ul class="text-sm text-gray-300 space-y-2">
+                                    <li><i class="fa-solid fa-check text-eco-light mr-2"></i> Plastik Bening/Tebal</li>
+                                    <li><i class="fa-solid fa-check text-eco-light mr-2"></i> Bungkus Makanan Ringan (Non-Foil)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pipa Air -->
+                    <div class="glass-panel rounded-3xl overflow-hidden flex flex-col group">
+                        <div class="h-48 bg-gradient-to-br from-blue-900 to-gray-900 relative overflow-hidden flex items-center justify-center">
+                            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGNpcmNsZSBjeD0iMTAiIGN5PSIxMCIgcj0iMiIgZmlsbD0iIzFkNDVkOCIgZmlsbC1vcGFjaXR5PSIwLjUiLz48L3N2Zz4=')]"></div>
+                            <i class="fa-solid fa-faucet-drip text-6xl text-blue-400 relative z-10 group-hover:scale-110 transition-transform duration-500"></i>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h4 class="text-2xl font-bold text-white mb-2">Pipa Drainase (PVC/PET)</h4>
+                            <p class="text-gray-400 text-sm mb-6 flex-grow">Daur ulang menjadi pipa air non-konsumsi untuk sistem drainase atau limbah. Anti korosi dan tahan lama.</p>
+                            <div class="glass-panel bg-white/5 p-4 rounded-xl border-none">
+                                <span class="text-xs text-eco-light font-bold uppercase tracking-wider block mb-2">Plastik Diterima:</span>
+                                <ul class="text-sm text-gray-300 space-y-2">
+                                    <li><i class="fa-solid fa-check text-eco-light mr-2"></i> Botol Minuman (PET)</li>
+                                    <li><i class="fa-solid fa-check text-eco-light mr-2"></i> Botol Sabun/Shampo (HDPE)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section id="process" class="py-24 relative z-10 border-t border-white/10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-eco-light font-bold tracking-widest uppercase text-sm mb-3">Cara Kerja</h2>
+                    <h3 class="text-3xl md:text-5xl font-bold text-white mb-6">Proses E-Contraction</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+                    <!-- Desktop Connecting Line -->
+                    <div class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-eco/0 via-eco/50 to-eco/0 -translate-y-1/2 z-0"></div>
+                    
+                    <!-- Step 1 -->
+                    <div class="glass-panel rounded-3xl p-6 text-center relative z-10 group hover:border-eco-light/50 transition-colors">
+                        <div class="w-16 h-16 mx-auto glass-panel bg-white/10 rounded-full flex items-center justify-center text-2xl text-white mb-4 border border-white/20 group-hover:bg-eco group-hover:border-eco-light transition-all">
+                            1
+                        </div>
+                        <h4 class="font-bold text-white text-lg mb-2">Pilah & Bersihkan</h4>
+                        <p class="text-gray-400 text-sm">Pisahkan dari organik, cuci, dan pastikan kering sempurna.</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="glass-panel rounded-3xl p-6 text-center relative z-10 group hover:border-eco-light/50 transition-colors">
+                        <div class="w-16 h-16 mx-auto glass-panel bg-white/10 rounded-full flex items-center justify-center text-2xl text-white mb-4 border border-white/20 group-hover:bg-eco group-hover:border-eco-light transition-all">
+                            2
+                        </div>
+                        <h4 class="font-bold text-white text-lg mb-2">Scan di Aplikasi</h4>
+                        <p class="text-gray-400 text-sm">Gunakan Eco-Scanner AI kami untuk deteksi jenis plastik dan estimasi poin.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="glass-panel rounded-3xl p-6 text-center relative z-10 group hover:border-eco-light/50 transition-colors">
+                        <div class="w-16 h-16 mx-auto glass-panel bg-white/10 rounded-full flex items-center justify-center text-2xl text-white mb-4 border border-white/20 group-hover:bg-eco group-hover:border-eco-light transition-all">
+                            3
+                        </div>
+                        <h4 class="font-bold text-white text-lg mb-2">Setor & Raih Poin</h4>
+                        <p class="text-gray-400 text-sm">Drop di titik kumpul. Poin otomatis masuk dan bisa ditukar reward.</p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="glass-panel rounded-3xl p-6 text-center relative z-10 group hover:border-eco-light/50 transition-colors">
+                        <div class="w-16 h-16 mx-auto glass-panel bg-white/10 rounded-full flex items-center justify-center text-2xl text-white mb-4 border border-white/20 group-hover:bg-eco group-hover:border-eco-light transition-all">
+                            4
+                        </div>
+                        <h4 class="font-bold text-white text-lg mb-2">Pembangunan</h4>
+                        <p class="text-gray-400 text-sm">Plastik disalurkan ke mitra pabrik untuk dilebur jadi infrastruktur.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="border-t border-white/10 pt-12 pb-8 relative z-10 glass-panel bg-black/20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="flex items-center justify-center gap-3 mb-6">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-eco-dark to-blue-500 flex items-center justify-center shadow-lg border border-white/20">
+                        <i class="fa-solid fa-leaf text-white text-xs"></i>
+                    </div>
+                    <span class="font-bold text-lg tracking-wide text-white">E-Contraction</span>
+                </div>
+                <p class="text-gray-500 text-sm mb-6">Membangun fondasi masa depan, satu plastik pada satu waktu.</p>
+                <p class="text-gray-600 text-xs">&copy; 2026 E-Contraction Indonesia. All rights reserved.</p>
+            </div>
+        </footer>
+    </main>
+
+    <!-- USER DASHBOARD OVERLAY / SLIDE VIEW -->
+    <main id="view-dashboard" class="fixed inset-0 z-50 hidden opacity-0 transition-opacity duration-500 bg-[#0f172a]/95 backdrop-blur-2xl overflow-y-auto">
+        
+        <!-- Dashboard Navbar -->
+        <div class="sticky top-0 z-50 glass-panel bg-black/20 px-6 py-4 flex justify-between items-center border-b border-white/10">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-leaf text-eco-light"></i>
+                <span class="font-bold text-white">Portal Kontributor</span>
+            </div>
+            <button onclick="toggleView('landing')" class="w-10 h-10 rounded-full glass-panel hover:bg-white/10 flex items-center justify-center text-white transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            
+            <!-- Profile & Points Glass Card -->
+            <div class="glass-panel rounded-3xl p-8 mb-10 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden border border-white/20">
+                <!-- Decorative glow -->
+                <div class="absolute -right-20 -top-20 w-64 h-64 bg-eco-500 rounded-full mix-blend-screen filter blur-[100px] opacity-40"></div>
+
+                <div class="flex items-center gap-6 relative z-10 w-full md:w-auto">
+                    <div class="relative">
+                        <img src="https://ui-avatars.com/api/?name=Budi+Santoso&background=22c55e&color=fff&size=128" alt="Profile" class="w-24 h-24 rounded-full border-2 border-white/50 shadow-[0_0_20px_rgba(34,197,94,0.3)]">
+                        <div class="absolute bottom-0 right-0 w-8 h-8 bg-gradient-to-tr from-yellow-500 to-yellow-300 rounded-full border border-white/50 flex items-center justify-center shadow-lg">
+                            <i class="fa-solid fa-crown text-white text-xs"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold text-white mb-1">Budi Santoso</h2>
+                        <p class="text-gray-400 text-sm mb-3"><i class="fa-solid fa-location-dot text-eco-light mr-1"></i> Jakarta Selatan</p>
+                        <span class="px-3 py-1 glass-panel bg-eco-500/20 text-eco-light text-xs font-bold rounded-full border border-eco-500/30">
+                            Level: Eco-Warrior
+                        </span>
+                    </div>
+                </div>
+
+                <div class="glass-panel bg-black/40 p-6 rounded-2xl border border-white/10 w-full md:w-auto min-w-[280px] z-10 text-center md:text-right">
+                    <p class="text-gray-400 text-sm font-medium mb-1 uppercase tracking-wider">Total Eco-Points</p>
+                    <div class="flex items-baseline justify-center md:justify-end gap-2 mb-4">
+                        <span class="text-5xl font-extrabold text-white tracking-tight">4,250</span>
+                        <span class="text-eco-light font-bold">EP</span>
+                    </div>
+                    <button onclick="alert('Fitur Redeem Point (Pulsa, E-Wallet) akan segera hadir!')" class="w-full glass-panel bg-white/5 hover:bg-white/10 text-white text-sm font-bold py-2.5 rounded-xl transition-all border border-white/20">
+                        Tukar Poin Hadiah
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                <!-- Out of the box feature: AI Eco-Scanner -->
+                <div class="lg:col-span-7 space-y-8">
+                    <div class="glass-panel rounded-3xl p-1 relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-gradient-to-r from-eco-500 via-blue-500 to-purple-500 opacity-20 blur-xl group-hover:opacity-40 transition-opacity duration-700"></div>
+                        <div class="bg-[#0f172a]/80 backdrop-blur-xl rounded-[22px] p-6 md:p-8 relative z-10 border border-white/10">
+                            <div class="flex justify-between items-center mb-6">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-white flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full glass-panel flex items-center justify-center bg-eco-500/20 text-eco-light border border-eco-500/30">
+                                            <i class="fa-solid fa-expand"></i>
+                                        </div>
+                                        AI Eco-Scanner
+                                    </h3>
+                                    <p class="text-sm text-gray-400 mt-2">Pindai sampah sebelum disetor untuk hitung estimasi poin & validasi kriteria.</p>
+                                </div>
+                            </div>
+
+                            <!-- Scanner UI -->
+                            <div id="scanner-box" class="relative w-full h-[320px] glass-panel bg-black/50 rounded-2xl overflow-hidden flex flex-col items-center justify-center border border-white/10">
+                                
+                                <!-- Scan Line Animation -->
+                                <div id="scan-laser" class="hidden absolute left-0 w-full h-[2px] bg-eco-light shadow-[0_0_15px_#4ade80] z-20"></div>
+
+                                <!-- Idle State -->
+                                <div id="scan-idle" class="text-center z-10 transition-opacity duration-300">
+                                    <div class="w-20 h-20 rounded-2xl glass-panel flex items-center justify-center mx-auto mb-4 border border-white/20">
+                                        <i class="fa-solid fa-camera-retro text-3xl text-gray-300"></i>
+                                    </div>
+                                    <button onclick="startScanner()" class="bg-white text-black hover:bg-gray-200 px-6 py-3 rounded-full text-sm font-bold transition-colors shadow-lg">
+                                        Aktifkan Kamera Scanner
+                                    </button>
+                                </div>
+
+                                <!-- Scanning / Result State (Image Background) -->
+                                <div id="scan-result" class="hidden absolute inset-0 w-full h-full bg-cover bg-center z-10" style="background-image: url('https://images.unsplash.com/photo-1528323273322-d81458248d40?q=80&w=800&auto=format&fit=crop');">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/50 to-transparent"></div>
+                                    
+                                    <!-- Result Card Overlay -->
+                                    <div id="result-card" class="hidden absolute bottom-6 left-6 right-6 glass-panel bg-[#0f172a]/80 p-5 rounded-2xl border border-white/20 transform translate-y-10 opacity-0 transition-all duration-500">
+                                        <div class="flex justify-between items-start mb-4">
+                                            <div>
+                                                <div class="flex items-center gap-2 mb-1">
+                                                    <span class="bg-eco text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wide">98% Akurat</span>
+                                                    <span class="text-white font-bold text-lg">Botol PET Bersih</span>
+                                                </div>
+                                                <p class="text-gray-400 text-xs">Cocok untuk bahan baku Pipa Air.</p>
+                                            </div>
+                                            <div class="text-right">
+                                                <span class="block text-eco-light font-bold text-xl">+15 EP</span>
+                                                <span class="text-gray-500 text-[10px] uppercase">Per Kg</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex gap-3">
+                                            <button onclick="resetScan()" class="flex-1 glass-panel hover:bg-white/10 text-white py-2 rounded-xl text-xs font-bold transition-colors border border-white/20">Batal</button>
+                                            <button onclick="alert('Masuk ke daftar setoran virtual Anda!')" class="flex-2 w-2/3 bg-eco hover:bg-eco-dark text-white py-2 rounded-xl text-xs font-bold transition-colors shadow-lg shadow-eco/30">Simpan ke Draft Setoran</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats & History Sidebar -->
+                <div class="lg:col-span-5 space-y-6">
+                    <!-- Impact Cards -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="glass-panel rounded-2xl p-5 border border-white/10">
+                            <i class="fa-solid fa-weight-scale text-gray-400 mb-2 block text-xl"></i>
+                            <p class="text-gray-400 text-[10px] uppercase tracking-wider font-bold mb-1">Total Setoran</p>
+                            <p class="text-2xl font-bold text-white">42.5 <span class="text-sm font-normal text-gray-500">kg</span></p>
+                        </div>
+                        <div class="glass-panel rounded-2xl p-5 border border-white/10 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-16 h-16 bg-blue-500/20 rounded-bl-full"></div>
+                            <i class="fa-solid fa-road text-blue-400 mb-2 block text-xl"></i>
+                            <p class="text-gray-400 text-[10px] uppercase tracking-wider font-bold mb-1">Infrastruktur</p>
+                            <p class="text-2xl font-bold text-white">3.5 <span class="text-sm font-normal text-gray-500">m² aspal</span></p>
+                        </div>
+                    </div>
+
+                    <!-- History Timeline -->
+                    <div class="glass-panel rounded-3xl p-6 border border-white/10">
+                        <h3 class="font-bold text-white mb-6 flex items-center gap-2 text-lg">
+                            <i class="fa-solid fa-clock-rotate-left text-gray-400"></i> Riwayat Terakhir
+                        </h3>
+                        
+                        <div class="space-y-5 relative before:absolute before:inset-0 before:ml-2 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-white/10 before:to-transparent">
+                            <!-- Item -->
+                            <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                                <div class="flex items-center justify-center w-5 h-5 rounded-full border-2 border-eco bg-[#0f172a] text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_10px_rgba(34,197,94,0.5)] z-10"></div>
+                                <div class="w-[calc(100%-2rem)] md:w-[calc(50%-1.5rem)] glass-panel bg-white/5 p-4 rounded-xl border border-white/10">
+                                    <div class="flex justify-between mb-1">
+                                        <span class="font-bold text-white text-sm">Plastik HDPE</span>
+                                        <span class="text-eco-light font-bold text-xs">+520 EP</span>
+                                    </div>
+                                    <p class="text-xs text-gray-400">5.2 kg disetor di Drop Point Bintaro.</p>
+                                    <time class="text-[10px] text-gray-500 mt-2 block">12 Feb 2026</time>
+                                </div>
+                            </div>
+                            <!-- Item -->
+                            <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                                <div class="flex items-center justify-center w-5 h-5 rounded-full border-2 border-white/30 bg-[#0f172a] text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10"></div>
+                                <div class="w-[calc(100%-2rem)] md:w-[calc(50%-1.5rem)] glass-panel bg-transparent p-4 rounded-xl border border-transparent">
+                                    <div class="flex justify-between mb-1">
+                                        <span class="font-bold text-gray-300 text-sm">Tukar Saldo</span>
+                                        <span class="text-red-400 font-bold text-xs">-2000 EP</span>
+                                    </div>
+                                    <p class="text-xs text-gray-500">Token Listrik 20k.</p>
+                                    <time class="text-[10px] text-gray-600 mt-2 block">28 Jan 2026</time>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // View Toggle Logic
+        function toggleView(viewName) {
+            const landing = document.getElementById('view-landing');
+            const dashboard = document.getElementById('view-dashboard');
+            
+            if (viewName === 'dashboard') {
+                dashboard.classList.remove('hidden');
+                // slight delay for transition effect
+                setTimeout(() => {
+                    dashboard.classList.remove('opacity-0');
+                    dashboard.classList.add('opacity-100');
+                    document.body.style.overflow = 'hidden'; // prevent background scrolling
+                }, 10);
+            } else {
+                dashboard.classList.remove('opacity-100');
+                dashboard.classList.add('opacity-0');
+                setTimeout(() => {
+                    dashboard.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }, 500);
+            }
+        }
+
+        // Eco-Scanner Logic
+        function startScanner() {
+            const idle = document.getElementById('scan-idle');
+            const resultBox = document.getElementById('scan-result');
+            const laser = document.getElementById('scan-laser');
+            const resultCard = document.getElementById('result-card');
+
+            // Hide Idle
+            idle.style.opacity = '0';
+            setTimeout(() => {
+                idle.classList.add('hidden');
+                resultBox.classList.remove('hidden');
+                
+                // Show & Animate Laser
+                laser.classList.remove('hidden');
+                laser.style.animation = 'scan 2s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate';
+                
+                // Simulate Scan Processing Time (3 seconds)
+                setTimeout(() => {
+                    laser.classList.add('hidden');
+                    laser.style.animation = 'none';
+                    
+                    // Show Result Card
+                    resultCard.classList.remove('hidden');
+                    // Trigger animation reflow
+                    void resultCard.offsetWidth;
+                    resultCard.classList.remove('translate-y-10', 'opacity-0');
+                    resultCard.classList.add('translate-y-0', 'opacity-100');
+                    
+                }, 2500);
+
+            }, 300);
+        }
+
+        function resetScan() {
+            const idle = document.getElementById('scan-idle');
+            const resultBox = document.getElementById('scan-result');
+            const resultCard = document.getElementById('result-card');
+
+            resultCard.classList.remove('translate-y-0', 'opacity-100');
+            resultCard.classList.add('translate-y-10', 'opacity-0');
+            
+            setTimeout(() => {
+                resultCard.classList.add('hidden');
+                resultBox.classList.add('hidden');
+                idle.classList.remove('hidden');
+                setTimeout(() => {
+                    idle.style.opacity = '1';
+                }, 50);
+            }, 500);
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
